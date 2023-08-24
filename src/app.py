@@ -7,18 +7,20 @@ from ml_model import predict
 from repo import Repo
 import datetime
 import locale
-import calendar
+
 
 def get_db_connection():
     conn = sqlite3.connect('src/db')
     return conn
 
+
 def get_weekday(date):
     cur_locale = locale.getlocale()
     locale.setlocale(locale.LC_ALL, '')
     date = datetime.date.fromisoformat(date)
+    locale.setkicale(cur_locale)
     return date.strftime('%A').title()
-    
+
 
 def predict_traffic():
     data = json.loads(request.data)
@@ -34,9 +36,9 @@ def predict_traffic():
     day = get_weekday(date)
 
     for (station, line) in stations:
-        traffic[station] = predict(holiday_name, date, time, precipitation,
-                line, station, day)
-
+        traffic[station] = predict(
+            holiday_name, date, time, precipitation, line, station, day
+        )
 
     return jsonify({'stations': traffic}), 200
 
