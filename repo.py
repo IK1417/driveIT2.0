@@ -1,6 +1,3 @@
-import sqlite3
-
-
 class Repo:
     def __init__(self, conn):
         self.conn = conn
@@ -14,6 +11,7 @@ class Repo:
             return [x[0] for x in records.fetchall()]
         else:
             return []
+
     def get_stations(self):
         cur = self.conn.cursor()
         cur.execute('SELECT station from stations')

@@ -1,18 +1,18 @@
-import sqlite3
 import json
+import sqlite3
 
-from flask import Flask, request, g, jsonify
+from flask import Flask, g, jsonify, request
 
-from repo import Repo
 from ml_model import predict
+from repo import Repo
 
 
 def get_db_connection():
     conn = sqlite3.connect('db')
     return conn
 
+
 def predict_traffic():
-    print(request.data)
     data = json.loads(request.data)
     date, time = data['datetime'].split()
     precipitation = float(data['precipitationMm'])
@@ -26,7 +26,7 @@ def predict_traffic():
     for station in stations:
         traffic[station] = predict(date, time, precipitation, holiday_name)
 
-    return jsonify({"stations": traffic}), 200
+    return jsonify({'stations': traffic}), 200
 
 
 def create_app():
@@ -40,9 +40,11 @@ def create_app():
     app.add_url_rule('/predict', view_func=predict_traffic, methods=['POST'])
     return app
 
+
 def main():
     app = create_app()
     app.run()
+
 
 if __name__ == '__main__':
     main()
