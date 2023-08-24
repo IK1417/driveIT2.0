@@ -1,14 +1,5 @@
 # driveIT2.0
 
-# windows requirements: python3.10
-
-```cmd
-py -m venv .venv
-.venv\Scrips\activate.bar
-pip intall .
-python app.py
-```
-
 # linux requirements: python3.10, python3.10-venv
 
 ```bash
