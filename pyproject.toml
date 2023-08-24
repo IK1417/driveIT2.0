@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name="DRIVEITSERV"
+version="0.1.7"
+dependencies = [
+    "flask",
+]
+
+[tool.black]
+line-length = 79
+target-version = ["py37", "py38", "py39", "py310"]
+extend-exclude = "docs"
+
+[tool.isort]
+profile = "black"
+combine_as_imports = true
+line_length = 79
