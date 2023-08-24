@@ -5,12 +5,20 @@ from flask import Flask, g, jsonify, request
 
 from ml_model import predict
 from repo import Repo
-
+import datetime
+import locale
+import calendar
 
 def get_db_connection():
     conn = sqlite3.connect('src/db')
     return conn
 
+def get_weekday(date):
+    cur_locale = locale.getlocale()
+    locale.setlocale(locale.LC_ALL, '')
+    date = datetime.date.fromisoformat(date)
+    return date.strftime('%A').title()
+    
 
 def predict_traffic():
     data = json.loads(request.data)
@@ -21,10 +29,14 @@ def predict_traffic():
     traffic = {}
 
     repo = g.repo
-    stations = repo.get_stations()
+    stations = repo.get_stations_with_line()
     holiday_name = repo.get_holiday(date)
-    for station in stations:
-        traffic[station] = predict(date, time, precipitation, holiday_name)
+    day = get_weekday(date)
+
+    for (station, line) in stations:
+        traffic[station] = predict(holiday_name, date, time, precipitation,
+                line, station, day)
+
 
     return jsonify({'stations': traffic}), 200
 

@@ -14,5 +14,10 @@ class Repo:
 
     def get_stations(self):
         cur = self.conn.cursor()
-        cur.execute('SELECT station from stations')
+        cur.execute('SELECT distinct station from stations')
         return [x[0] for x in cur.fetchall()]
+
+    def get_stations_with_line(self):
+        cur = self.conn.cursor()
+        cur.execute('SELECT distinct station, line from stations')
+        return cur.fetchall()
