@@ -9,7 +9,7 @@ pip intall .
 python app.py
 ```
 
-# bash requirements: python3.10, python3.10-venv
+# linux requirements: python3.10, python3.10-venv
 
 ```bash
 python3 -m venv .venv
