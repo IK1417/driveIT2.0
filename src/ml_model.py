@@ -57,13 +57,6 @@ def ppredict(holiday, date, hour, precipitation, line, station, weekday):
     season = ['winter', 'spring', 'summer', 'autumn'][month // 3 % 4]
     is_holiday = bool(holiday)
     holiday = holiday or '-'
-    return model.predict(
-        hour,
-        line,
-        station,
-        holiday,
-        precipitation,
-        weekday,
-        is_holiday,
-        season,
-    )
+    model = load_model()
+    pred_data = np.array[[hour, get_line_alias(line), get_station_alias(station), get_holiday_alias(holiday), precipitation, get_weekday_alias(weekday), is_holiday,get_season_alias(season)]]
+    return model.predict(pred_data)
