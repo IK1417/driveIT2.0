@@ -1,5 +1,6 @@
 import pickle
 import json
+import sklearn
 
 aliases = json.load(open('src/replaces.json'))
 
@@ -58,5 +59,5 @@ def ppredict(holiday, date, hour, precipitation, line, station, weekday):
     is_holiday = bool(holiday)
     holiday = holiday or '-'
     model = load_model()
-    pred_data = np.array[[hour, get_line_alias(line), get_station_alias(station), get_holiday_alias(holiday), precipitation, get_weekday_alias(weekday), is_holiday,get_season_alias(season)]]
-    return model.predict(pred_data)
+    pred_data = np.array([[hour, get_line_alias(line), get_station_alias(station), get_holiday_alias(holiday), precipitation, get_weekday_alias(weekday), is_holiday,get_season_alias(season)]])
+    return float(model.predict(pred_data))
